@@ -21,4 +21,7 @@ O **MedVc** é uma plataforma web desenvolvida para gerenciar os processos admin
 - **Frameworks e Bibliotecas**:
   - Spring Boot (back-end)
   - Thymeleaf (front-end)
-- **Banco de Dados**: TomCat7
+- **Banco de Dados**: 
+  - MySQL
+- **Hospedagem**: 
+  - AWS ou Microsoft Azure para escalabilidade e performance
