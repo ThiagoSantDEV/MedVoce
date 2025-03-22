@@ -1,4 +1,4 @@
-package clinic.medvc.controller;
+package clinic.medvc.controller.User;
 
 import clinic.medvc.model.User;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +17,7 @@ public class UserController
     public  UserController(UserService userService){
         this.userService = userService;
     }
+
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody CreateUserDto createUserDto){
 

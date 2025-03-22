@@ -1,6 +1,6 @@
 package clinic.medvc.service;
 
-import clinic.medvc.controller.CreateUserDto;
+import clinic.medvc.controller.User.CreateUserDto;
 import clinic.medvc.model.User;
 import org.springframework.stereotype.Service;
 import clinic.medvc.repository.UserRepository;
@@ -18,7 +18,7 @@ public class UserService {
 
     public UUID createUser(CreateUserDto createUserDto) {
         var entity = new User(
-                UUID.randomUUID(),
+                null, // Remova a geração manual do UUID
                 createUserDto.name(),
                 createUserDto.cpf(),
                 createUserDto.email(),
