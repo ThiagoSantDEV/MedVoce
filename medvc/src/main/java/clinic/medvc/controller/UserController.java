@@ -1,9 +1,9 @@
-package controller;
+package clinic.medvc.controller;
 
-import model.User;
+import clinic.medvc.model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.UserService;
+import clinic.medvc.service.UserService;
 
 import java.net.URI;
 
@@ -30,8 +30,4 @@ public class UserController
        return null;
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return "Endpoint /v1/users/test is working!";
-    }
 }

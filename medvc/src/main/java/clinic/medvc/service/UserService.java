@@ -1,9 +1,9 @@
-package service;
+package clinic.medvc.service;
 
-import controller.CreateUserDto;
-import model.User;
+import clinic.medvc.controller.CreateUserDto;
+import clinic.medvc.model.User;
 import org.springframework.stereotype.Service;
-import repository.UserRepository;
+import clinic.medvc.repository.UserRepository;
 
 import java.time.Instant;
 import java.util.UUID;

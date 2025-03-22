@@ -1,4 +1,4 @@
-package model;
+package clinic.medvc.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
