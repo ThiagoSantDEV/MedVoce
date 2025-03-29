@@ -2,6 +2,7 @@ package clinic.medvc.service;
 
 import clinic.medvc.controller.User.CreateUserDto;
 import clinic.medvc.controller.User.UpdateUserDto;
+import clinic.medvc.model.Enum.UserRole;
 import clinic.medvc.model.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class UserService {
     }
 
     public UUID createUser(CreateUserDto createUserDto) {
+
         var entity = new User(
                 null,
                 createUserDto.name(),
@@ -31,12 +33,13 @@ public class UserService {
                 createUserDto.email(),
                 passwordEncoder.encode(createUserDto.password()),
                 Instant.now(),
-                null
+                null,
+                createUserDto.role()
         );
 
-        var userSaved = userRepository.save(entity);
-        return userSaved.getIdUser();
+        return userRepository.save(entity).getIdUser();
     }
+
 
     public Optional<User>  getUserById(String userId){
         return userRepository.findById(UUID.fromString(userId));

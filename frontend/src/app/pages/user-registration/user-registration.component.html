@@ -3,6 +3,7 @@
     <label for="name">Nome:</label>
     <input id="name" [(ngModel)]="user.name" name="name" required>
   </div>
+  
   <div>
     <label for="cpf">CPF:</label>
     <input id="cpf" [(ngModel)]="user.cpf" name="cpf" required>
@@ -10,11 +11,21 @@
 
   <div>
     <label for="email">Email:</label>
-    <input id="email" [(ngModel)]="user.email" name="email" required>
+    <input id="email" type="email" [(ngModel)]="user.email" name="email" required>
   </div>
+  
   <div>
     <label for="password">Senha:</label>
     <input id="password" type="password" [(ngModel)]="user.password" name="password" required>
+  </div>
+  
+  <div>
+    <label for="role">Tipo de Usuário:</label>
+    <select [(ngModel)]="user.role" name="role">
+      <option value="ROLE_USER">Usuário Padrão</option>
+      <option value="ROLE_ADMIN">Administrador</option>
+    </select>
+    
   </div>
   <button type="submit">Registrar</button>
 </form>

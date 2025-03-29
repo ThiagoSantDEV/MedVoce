@@ -29,6 +29,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/v1/auth/**").permitAll()
                         .requestMatchers("/v1/users/userRegistration").permitAll()
+                        .requestMatchers("/v1/admin/**").hasRole("ADMIN") // Apenas admin
+                        .requestMatchers("/v1/users/**").hasAnyRole("ADMIN", "USER") // Ambos
+                        .requestMatchers(HttpMethod.POST, "/v1/users/userRegistration").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/v1/users/userRegistration").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
