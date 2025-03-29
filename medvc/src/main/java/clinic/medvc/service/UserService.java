@@ -3,6 +3,7 @@ package clinic.medvc.service;
 import clinic.medvc.controller.User.CreateUserDto;
 import clinic.medvc.controller.User.UpdateUserDto;
 import clinic.medvc.model.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import clinic.medvc.repository.UserRepository;
 
@@ -15,9 +16,11 @@ import java.util.UUID;
 public class UserService {
 
     private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UUID createUser(CreateUserDto createUserDto) {
@@ -26,7 +29,7 @@ public class UserService {
                 createUserDto.name(),
                 createUserDto.cpf(),
                 createUserDto.email(),
-                createUserDto.password(),
+                passwordEncoder.encode(createUserDto.password()),
                 Instant.now(),
                 null
         );
@@ -38,8 +41,9 @@ public class UserService {
     public Optional<User>  getUserById(String userId){
         return userRepository.findById(UUID.fromString(userId));
     }
-    public Optional<User> getUserByEmail(String email){return userRepository.findById(UUID.fromString(email));}
-
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
     public List<User> listUser(){
         return userRepository.findAll();
     }
@@ -59,13 +63,12 @@ public class UserService {
             }
 
             if(updateUserDto.password() != null){
-                user.setPassword(updateUserDto.password());
+                user.setPassword(passwordEncoder.encode(updateUserDto.password()));
             }
             userRepository.save(user);
 
         }
     }
-
 
         public void deleteUser(String userId){
         var id = UUID.fromString(userId);
@@ -75,8 +78,6 @@ public class UserService {
         if(userExists){
             userRepository.deleteById(id);
         }
-
-
 
     }
 }
