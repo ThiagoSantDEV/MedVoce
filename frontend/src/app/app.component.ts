@@ -9,4 +9,8 @@ import { RouterModule } from '@angular/router'; // Importe o RouterModule
     <router-outlet></router-outlet>
   `,
 })
-export class AppComponent {}
+export class AppComponent {
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  }
+}

@@ -23,7 +23,6 @@ public class DoctorController {
 
         var doctorId = doctorService.createDoctor(createDoctorDto);
         return ResponseEntity.created(URI.create("/v1/doctors/" + doctorId.toString())).build();
-
     }
 
     @GetMapping("/{doctorId}")

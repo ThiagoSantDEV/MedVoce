@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @Service
 public class UserService {
+
     private UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -37,6 +38,7 @@ public class UserService {
     public Optional<User>  getUserById(String userId){
         return userRepository.findById(UUID.fromString(userId));
     }
+    public Optional<User> getUserByEmail(String email){return userRepository.findById(UUID.fromString(email));}
 
     public List<User> listUser(){
         return userRepository.findAll();
