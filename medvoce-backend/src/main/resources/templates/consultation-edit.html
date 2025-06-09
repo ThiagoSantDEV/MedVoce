@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Consulta</title>
+</head>
+<body>
+<header>
+    <h1>Editar Consulta</h1>
+</header>
+<main>
+    <form th:action="@{/consultation/edit}" method="post">
+        <input type="hidden" id="id" name="id" th:value="${consultation.id}">
+        <div>
+            <label for="doctor">Médico:</label>
+            <select id="doctor" name="doctorId" required>
+                <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"
+                        th:selected="${doctor.id == consultation.doctor.id}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="patient">Paciente:</label>
+            <select id="patient" name="patientId" required>
+                <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.name}"
+                        th:selected="${patient.id == consultation.patient.id}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="date">Data:</label>
+            <input type="datetime-local" id="date" name="date" th:value="${#dates.format(consultation.date, 'yyyy-MM-dd\'T\'HH:mm')}" required>
+        </div>
+        <div>
+            <button type="submit">Salvar</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Exame</title>
+</head>
+<body>
+<header>
+    <h1>Adicionar Exame</h1>
+</header>
+<main>
+    <form th:action="@{/exam/add}" method="post">
+        <div>
+            <label for="type">Tipo:</label>
+            <input type="text" id="type" name="type" required>
+        </div>
+        <div>
+            <label for="date">Data:</label>
+            <input type="datetime-local" id="date" name="date" required>
+        </div>
+        <div>
+            <label for="patient">Paciente:</label>
+            <select id="patient" name="patientId" required>
+                <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.name}"></option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Adicionar</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

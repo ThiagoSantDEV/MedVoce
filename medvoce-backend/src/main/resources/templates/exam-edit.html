@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Exame</title>
+</head>
+<body>
+<header>
+  <h1>Editar Exame</h1>
+</header>
+<main>
+  <form th:action="@{/exam/edit}" method="post">
+    <input type="hidden" id="id" name="id" th:value="${exam.id}">
+    <div>
+      <label for="type">Tipo:</label>
+      <input type="text" id="type" name="type" th:value="${exam.type}" required>
+    </div>
+    <div>
+      <label for="date">Data:</label>
+      <input type="datetime-local" id="date" name="date" th:value="${#dates.format(exam.date, 'yyyy-MM-dd\'T\'HH:mm')}" required>
+    </div>
+    <div>
+      <label for="patient">Paciente:</label>
+      <select id="patient" name="patientId" required>
+        <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.name}"
+                th:selected="${patient.id == exam.patient.id}"></option>
+      </select>
+    </div>
+    <div>
+      <button type="submit">Salvar</button>
+    </div>
+  </form>
+</main>
+</body>
+</html>

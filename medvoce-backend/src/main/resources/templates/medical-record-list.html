@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Prontuários</title>
+</head>
+<body>
+<header>
+  <h1>Lista de Prontuários</h1>
+</header>
+<main>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Data de Criação</th>
+      <th>Paciente</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="record : ${medicalRecords}">
+      <td th:text="${record.id}"></td>
+      <td th:text="${record.creationDate}"></td>
+      <td th:text="${record.patient.name}"></td>
+      <td>
+        <a th:href="@{'/medical-record/details/' + ${record.id}}">Ver Detalhes</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>

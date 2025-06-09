@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Administrador</title>
+</head>
+<body>
+<header>
+    <h1>Editar Administrador</h1>
+</header>
+<main>
+    <form th:action="@{/admin/edit}" method="post">
+        <input type="hidden" id="id" name="id" th:value="${admin.id}">
+        <div>
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" th:value="${admin.name}" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" th:value="${admin.email}" required>
+        </div>
+        <div>
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" th:value="${admin.password}" required>
+        </div>
+        <div>
+            <button type="submit">Salvar</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

@@ -25,6 +25,24 @@ public class UsersService {
     @Autowired
     private ResponseBuilder responseBuilder;
 
+    public void register(br.app.tads.medvoce.Model.Patient patient) {
+        if (patientRepository.existsByEmail(patient.getEmail())) {
+            throw new IllegalArgumentException("Email already in use.");
+        }
+        patient.setPassword(patient.getPassword());
+        patient.setStatus(Status.ACTIVE);
+        patientRepository.save(patient);
+    }
+
+    public void register(br.app.tads.medvoce.Model.Doctor doctor) {
+        if (doctorRepository.existsByEmail(doctor.getEmail())) {
+            throw new IllegalArgumentException("Email already in use.");
+        }
+        doctor.setPassword((doctor.getPassword()));
+        doctor.setStatus(Status.ACTIVE);
+        doctorRepository.save(doctor);
+    }
+
     public ResponseEntity<?> getAllActives() {
         List<br.app.tads.medvoce.Model.Patient> patientList = patientRepository.findAllByStatus(Status.ACTIVE);
         List<br.app.tads.medvoce.Model.Doctor> doctorList = doctorRepository.findAllByStatus(Status.ACTIVE);

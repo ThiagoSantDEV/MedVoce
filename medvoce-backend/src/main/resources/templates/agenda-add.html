@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adicionar Agenda</title>
+</head>
+<body>
+<header>
+  <h1>Adicionar Agenda</h1>
+</header>
+<main>
+  <form th:action="@{/agenda}" method="post">
+    <div>
+      <label for="doctor">Médico:</label>
+      <select id="doctor" name="doctorId" required>
+        <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"></option>
+      </select>
+    </div>
+    <div>
+      <label for="date">Data:</label>
+      <input type="datetime-local" id="date" name="date" required>
+    </div>
+    <div>
+      <button type="submit">Adicionar</button>
+    </div>
+  </form>
+</main>
+</body>
+</html>

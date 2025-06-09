@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Agenda</title>
+</head>
+<body>
+<header>
+    <h1>Editar Agenda</h1>
+</header>
+<main>
+    <form th:action="@{/agenda}" method="post">
+        <input type="hidden" id="id" name="id" th:value="${agenda.id}">
+        <div>
+            <label for="doctor">Médico:</label>
+            <select id="doctor" name="doctorId" required>
+                <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"
+                        th:selected="${doctor.id == agenda.doctor.id}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="date">Data:</label>
+            <input type="datetime-local" id="date" name="date" th:value="${#dates.format(agenda.date, 'yyyy-MM-dd\'T\'HH:mm')}" required>
+        </div>
+        <div>
+            <button type="submit">Salvar</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

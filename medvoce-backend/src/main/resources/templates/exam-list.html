@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Exames</title>
+</head>
+<body>
+<header>
+    <h1>Lista de Exames</h1>
+</header>
+<main>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Data</th>
+            <th>Paciente</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="exam : ${exams}">
+            <td th:text="${exam.id}"></td>
+            <td th:text="${exam.type}"></td>
+            <td th:text="${exam.date}"></td>
+            <td th:text="${exam.patient.name}"></td>
+            <td>
+                <a th:href="@{'/exam/edit/' + ${exam.id}}">Editar</a>
+                <a th:href="@{'/exam/delete/' + ${exam.id}}">Excluir</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

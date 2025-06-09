@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Agendas</title>
+</head>
+<body>
+<header>
+    <h1>Lista de Agendas</h1>
+</header>
+<main>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Data</th>
+            <th>Médico</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="agenda : ${agendas}">
+            <td th:text="${agenda.id}"></td>
+            <td th:text="${agenda.date}"></td>
+            <td th:text="${agenda.doctor.name}"></td>
+            <td>
+                <a th:href="@{'/agenda/edit/' + ${agenda.id}}">Editar</a>
+                <a th:href="@{'/agenda/delete/' + ${agenda.id}}">Excluir</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

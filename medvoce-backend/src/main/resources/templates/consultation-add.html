@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Consulta</title>
+</head>
+<body>
+<header>
+    <h1>Agendar Consulta</h1>
+</header>
+<main>
+    <form th:action="@{/consultation/add}" method="post">
+        <div>
+            <label for="doctor">Médico:</label>
+            <select id="doctor" name="doctorId" required>
+                <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="patient">Paciente:</label>
+            <select id="patient" name="patientId" required>
+                <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.name}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="date">Data:</label>
+            <input type="datetime-local" id="date" name="date" required>
+        </div>
+        <div>
+            <button type="submit">Agendar</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

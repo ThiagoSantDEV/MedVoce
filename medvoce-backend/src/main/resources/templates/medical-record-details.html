@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Prontuário</title>
+</head>
+<body>
+<header>
+    <h1>Detalhes do Prontuário</h1>
+</header>
+<main>
+    <section>
+        <h2>Informações do Paciente</h2>
+        <p><strong>Nome:</strong> <span th:text="${medicalRecord.patient.name}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${medicalRecord.patient.email}"></span></p>
+    </section>
+    <section>
+        <h2>Informações do Prontuário</h2>
+        <p><strong>ID:</strong> <span th:text="${medicalRecord.id}"></span></p>
+        <p><strong>Data de Criação:</strong> <span th:text="${medicalRecord.creationDate}"></span></p>
+        <p><strong>Descrição:</strong> <span th:text="${medicalRecord.description}"></span></p>
+    </section>
+    <section>
+        <h2>Exames Associados</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Data</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="exam : ${medicalRecord.exams}">
+                <td th:text="${exam.id}"></td>
+                <td th:text="${exam.type}"></td>
+                <td th:text="${exam.date}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>
