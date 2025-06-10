@@ -1,32 +1,101 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Agenda</title>
+    <title>MEDVocê - Editar Agenda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/agenda.css">
 </head>
 <body>
-<header>
-    <h1>Editar Agenda</h1>
+<header class="header">
+    <div class="header-content">
+        <div class="logo">
+            <h1>MED<span>Você</span></h1>
+        </div>
+        <nav>
+            <a th:href="@{/agenda}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </a>
+        </nav>
+    </div>
 </header>
-<main>
-    <form th:action="@{/agenda}" method="post">
-        <input type="hidden" id="id" name="id" th:value="${agenda.id}">
-        <div>
-            <label for="doctor">Médico:</label>
-            <select id="doctor" name="doctorId" required>
-                <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"
-                        th:selected="${doctor.id == agenda.doctor.id}"></option>
-            </select>
-        </div>
-        <div>
-            <label for="date">Data:</label>
-            <input type="datetime-local" id="date" name="date" th:value="${#dates.format(agenda.date, 'yyyy-MM-dd\'T\'HH:mm')}" required>
-        </div>
-        <div>
-            <button type="submit">Salvar</button>
-        </div>
-    </form>
+
+<main class="main-content">
+    <div class="form-container">
+        <h2 class="page-title">
+            <i class="fas fa-calendar-edit"></i> Editar Agendamento
+        </h2>
+
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+        <form id="agendaForm" class="agenda-form" th:action="@{/agenda}" method="post">
+            <input type="hidden" id="id" name="id" th:value="${agenda.id}">
+
+            <div class="form-group">
+                <label for="doctor">Médico</label>
+                <select id="doctor" name="doctorId" required>
+                    <option value="" disabled>Selecione um médico</option>
+                    <option th:each="doctor : ${doctors}"
+                            th:value="${doctor.id}"
+                            th:text="${doctor.name + ' - ' + doctor.specialty}"
+                            th:selected="${doctor.id == agenda.doctor.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Data e Hora</label>
+                <input type="datetime-local" id="date" name="date"
+                       th:value="${#dates.format(agenda.date, 'yyyy-MM-dd\'T\'HH:mm')}"
+                       required>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-danger" id="deleteBtn">
+                    <i class="fas fa-trash-alt"></i> Excluir
+                </button>
+                <div>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='/agenda'">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Salvar Alterações
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
 </main>
+
+<footer class="footer">
+    <div class="copyright">
+        &copy; 2025 MEDVocê. Todos os direitos reservados.
+    </div>
+</footer>
+
+<!-- Modal de Confirmação -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <h3 class="modal-title">
+            <i class="fas fa-exclamation-triangle"></i> Confirmar Exclusão
+        </h3>
+        <p>Deseja realmente excluir este agendamento?</p>
+        <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" id="cancelDelete">
+                Cancelar
+            </button>
+            <form th:action="@{'/agenda/delete/' + ${agenda.id}}" method="post">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i> Excluir
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/js/agenda-edit.js"></script>
 </body>
 </html>

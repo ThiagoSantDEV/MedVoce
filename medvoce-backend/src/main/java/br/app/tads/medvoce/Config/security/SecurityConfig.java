@@ -41,6 +41,8 @@ public class SecurityConfig {
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form
                         .loginPage("/login")
+                        .loginProcessingUrl("/auth/login")
+                        .usernameParameter("email")
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )

@@ -1,36 +1,129 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Administradores</title>
+    <title>MEDVocê - Lista de Administradores</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/admin-list.css}">
+    <script th:src="@{/js/admin-list.js}"></script>
 </head>
 <body>
 <header>
-    <h1>Lista de Administradores</h1>
+    <div class="header-content">
+        <div class="logo">
+            <h1>MED<span>Você</span></h1>
+        </div>
+        <nav>
+            <a href="/admin/dashboard" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </a>
+        </nav>
+    </div>
 </header>
+
 <main>
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="admin : ${admins}">
-            <td th:text="${admin.id}"></td>
-            <td th:text="${admin.name}"></td>
-            <td th:text="${admin.email}"></td>
-            <td>
-                <a th:href="@{'/admin/edit/' + ${admin.id}}">Editar</a>
-                <a th:href="@{'/admin/delete/' + ${admin.id}}">Excluir</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="admin-container">
+        <div class="page-header">
+            <h2 class="page-title">
+                <i class="fas fa-user-cog"></i>
+                Administradores do Sistema
+            </h2>
+
+            <div class="search-add-container">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Pesquisar administrador..." id="searchInput">
+                </div>
+                <a href="/admin/add" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Novo Administrador
+                </a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table id="adminsTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="admin : ${admins}">
+                    <td th:text="${admin.id}"></td>
+                    <td th:text="${admin.name}"></td>
+                    <td th:text="${admin.email}"></td>
+                    <td>
+                                <span class="status-badge active-badge">
+                                    <i class="fas fa-check-circle"></i> Ativo
+                                </span>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <a th:href="@{'/admin/edit/' + ${admin.id}}" class="action-btn edit-btn" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button class="action-btn delete-btn" title="Excluir"
+                                    onclick="showDeleteModal('${admin.id}', '${admin.name}')">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <div class="pagination-info">
+                Mostrando 1 a 10 de 25 administradores
+            </div>
+            <div class="pagination-controls">
+                <button class="page-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 </main>
+
+<footer>
+    <div class="copyright">
+        &copy; 2025 MEDVocê. Todos os direitos reservados.
+    </div>
+</footer>
+
+<!-- Modal de confirmação de exclusão -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <h3 class="modal-title">
+            <i class="fas fa-exclamation-triangle"></i> Confirmar Exclusão
+        </h3>
+        <p id="deleteModalText">Tem certeza que deseja excluir o administrador <strong>Nome do Admin</strong>? Esta ação não pode ser desfeita.</p>
+        <div class="modal-actions">
+            <button onclick="hideDeleteModal()" class="btn btn-secondary">
+                Cancelar
+            </button>
+            <form id="deleteForm" method="post" style="margin: 0;">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i> Confirmar Exclusão
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>
