@@ -8,16 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
-@RestController
+@Controller
 @RequestMapping("/api/consultations")
 public class ConsultationController {
 
     @Autowired
     private ConsultationService consultationService;
+
+    @GetMapping("/consultation-list")
+    public String consultationList() {
+        return "consultation-list";
+    }
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN') or hasRole('PATIENT')")

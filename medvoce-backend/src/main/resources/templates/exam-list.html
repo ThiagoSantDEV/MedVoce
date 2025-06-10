@@ -1,38 +1,134 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Exames</title>
+    <title>MEDVocê - Lista de Exames</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/exam.css">
 </head>
 <body>
-<header>
-    <h1>Lista de Exames</h1>
+<header class="header">
+    <div class="header-content">
+        <div class="logo">
+            <h1>MED<span>Você</span></h1>
+        </div>
+        <nav>
+            <a href="/home" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </a>
+        </nav>
+    </div>
 </header>
-<main>
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Tipo</th>
-            <th>Data</th>
-            <th>Paciente</th>
-            <th>Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="exam : ${exams}">
-            <td th:text="${exam.id}"></td>
-            <td th:text="${exam.type}"></td>
-            <td th:text="${exam.date}"></td>
-            <td th:text="${exam.patient.name}"></td>
-            <td>
-                <a th:href="@{'/exam/edit/' + ${exam.id}}">Editar</a>
-                <a th:href="@{'/exam/delete/' + ${exam.id}}">Excluir</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+
+<main class="main-content">
+    <div class="table-container">
+        <div class="table-header">
+            <h2 class="page-title">
+                <i class="fas fa-flask"></i> Lista de Exames
+            </h2>
+
+            <div class="actions">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Pesquisar exames..." id="searchInput">
+                </div>
+                <a href="/exam/add" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Novo Exame
+                </a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table id="examsTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tipo</th>
+                    <th>Data</th>
+                    <th>Paciente</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="exam : ${exams}">
+                    <td th:text="${exam.id}"></td>
+                    <td th:text="${exam.type}"></td>
+                    <td th:text="${#dates.format(exam.date, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${exam.patient.name}"></td>
+                    <td>
+                                <span th:classappend="${exam.status == 'PENDENTE'} ? 'status-badge warning' :
+                                                     (${exam.status == 'CONCLUÍDO'} ? 'status-badge success' :
+                                                     'status-badge danger')"
+                                      th:text="${exam.status}">
+                                </span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <a th:href="@{'/exam/edit/' + ${exam.id}}" class="action-btn edit" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button class="action-btn delete" title="Excluir"
+                                    th:data-id="${exam.id}" th:data-name="${exam.type + ' - ' + exam.patient.name}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            <a th:href="@{'/exam/view/' + ${exam.id}}" class="action-btn view" title="Visualizar">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <div class="pagination-info">
+                Mostrando <span id="showingCount">1-10</span> de <span th:text="${exams.size()}">25</span> exames
+            </div>
+            <div class="pagination-controls">
+                <button class="page-btn" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 </main>
+
+<footer class="footer">
+    <div class="copyright">
+        &copy; 2025 MEDVocê. Todos os direitos reservados.
+    </div>
+</footer>
+
+<!-- Modal de Confirmação -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <h3 class="modal-title">
+            <i class="fas fa-exclamation-triangle"></i> Confirmar Exclusão
+        </h3>
+        <p id="modalMessage">Deseja realmente excluir o exame <strong id="examName"></strong>?</p>
+        <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" id="cancelBtn">
+                Cancelar
+            </button>
+            <form id="deleteForm" method="post">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i> Confirmar Exclusão
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/js/exam.js"></script>
 </body>
 </html>
